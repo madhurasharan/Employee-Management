@@ -108,29 +108,36 @@ public class EmployeeDAO {
     }
 
     // UPDATE
-    public Employee updateEmployee(int empId, Employee emp) {
+   public Employee updateEmployee(int empId, Employee emp) {
 
-        try {
+    try {
 
-            Connection con = DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
 
-            String sql =
-                "UPDATE madhu_employee SET empname=?, salary=? WHERE empid=?";
+        String sql =
+            "UPDATE madhu_employee SET empname=?, salary=? WHERE empid=?";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, emp.getEmpName());
-            ps.setDouble(2, emp.getSalary());
-            ps.setInt(3, empId);
+        ps.setString(1, emp.getEmpName());
+        ps.setDouble(2, emp.getSalary());
+        ps.setInt(3, empId);
 
-            ps.executeUpdate();
+        int rows = ps.executeUpdate();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("Rows Updated = " + rows);
+
+        if(rows > 0) {
+            emp.setEmpId(empId);
+            return emp;
         }
 
-        return emp;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return null;
+}
 
     // DELETE
     public boolean deleteEmployee(int empId) {
