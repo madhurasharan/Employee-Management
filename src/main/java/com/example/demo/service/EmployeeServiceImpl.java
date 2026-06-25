@@ -1,46 +1,75 @@
 package com.example.demo.service;
 
-import java.util.*;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.beans.Employee;
-import com.example.demo.dao.EmployeeDAO;
+import com.example.demo.dao.EmployeeRepositary;
 import com.example.demo.exception.EmployeeException;
 
 @Service
 public class EmployeeServiceImpl implements IEmployee {
 
     @Autowired
-    private EmployeeDAO dao;
+    private EmployeeRepositary dao;
 
+    // ADD
     @Override
     public Employee addEmployee(Employee emp) {
-        return dao.addEmployee(emp);
+        return dao.save(emp);
     }
 
+    // GET BY ID
     @Override
     public Employee getEmployee(int empId) throws EmployeeException {
-        Employee e=dao.getEmployee(empId);
-        if(e==null)
-            throw new EmployeeException("Please enter correct id");
 
-        return e;
+        return dao.findById(empId)
+                .orElseThrow(() ->
+                        new EmployeeException("Employee not found with id: " + empId));
     }
 
+    // GET ALL
     @Override
     public List<Employee> getEmployees() {
-        return dao.getEmployees();
+        return dao.findAll();
     }
 
+    // UPDATE
     @Override
-    public Employee updateEmployee(int empId, Employee emp) {
-        return dao.updateEmployee(empId, emp);
+    public Employee updateEmployee(int empId, Employee emp) throws EmployeeException {
+
+        Employee e= dao.findById(empId)
+                .orElseThrow(() ->
+                        new EmployeeException("Employee not found with id: " + empId));
+
+        e.setEmpName(emp.getEmpName());
+        e.setSalary(emp.getSalary());
+
+        return dao.save(e);
     }
 
+    // DELETE
     @Override
     public boolean deleteEmployee(int empId) {
-        return dao.deleteEmployee(empId);
+
+        if (dao.existsById(empId)) {
+            dao.deleteById(empId);
+            return true;
+        }
+        return false;
+    }
+    
+    //MAX SALARY
+    @Override
+    public List<Employee> getMaxSalary() {
+    return dao.getMaxSalary();
+    }
+
+    //SEC MAX SALARY
+    @Override
+    public List<Employee> getSecondMaxSalary(){
+    return dao.getSecondMaxSalary();
     }
 }

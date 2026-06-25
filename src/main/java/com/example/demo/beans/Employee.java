@@ -1,18 +1,22 @@
 package com.example.demo.beans;
 
-public class Employee {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "madhu14")
+
+public class Employee {
+    @Id
+    @GeneratedValue
     private int empId;
+
     private String empName;
     private double salary;
 
     public Employee() {
-    }
-
-    public Employee(int empId, String empName, double salary) {
-        this.empId = empId;
-        this.empName = empName;
-        this.salary = salary;
     }
 
     public int getEmpId() {

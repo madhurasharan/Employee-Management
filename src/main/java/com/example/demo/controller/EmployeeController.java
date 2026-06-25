@@ -33,7 +33,7 @@ public class EmployeeController {
     @PutMapping("/updateEmployee/{empId}")
     public Employee updateEmployee(
         @PathVariable int empId,
-        @RequestBody Employee emp) {
+        @RequestBody Employee emp) throws EmployeeException {
 
     return service.updateEmployee(empId, emp);
     }
@@ -42,4 +42,14 @@ public class EmployeeController {
     public boolean deleteEmployee(@PathVariable int empId) {
         return service.deleteEmployee(empId);
     }
+
+    @GetMapping("/maxSalary")
+    public List<Employee> getMaxSalary() {
+    return service.getMaxSalary();
+}
+
+@GetMapping("/secondMaxSalary")
+public List<Employee> getSecondMaxSalary() {
+    return service.getSecondMaxSalary();
+}
 }

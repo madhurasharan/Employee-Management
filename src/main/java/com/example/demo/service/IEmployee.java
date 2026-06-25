@@ -13,7 +13,10 @@ public interface IEmployee {
 
     List<Employee> getEmployees();
 
-    Employee updateEmployee(int empId, Employee emp);
+    Employee updateEmployee(int empId, Employee emp) throws EmployeeException;
 
     boolean deleteEmployee(int empId);
+
+    List<Employee> getMaxSalary();
+    List<Employee> getSecondMaxSalary();
 }
