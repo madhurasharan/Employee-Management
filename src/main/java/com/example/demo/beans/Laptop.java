@@ -1,18 +1,22 @@
 package com.example.demo.beans;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="laptop14")
 public class Laptop {
 
+    @Id
+    @GeneratedValue
     private int laptopId;
+
     private String laptopName;
     private double cost;
 
     public Laptop() {
-    }
-
-    public Laptop(int laptopId, String laptopName, double cost) {
-        this.laptopId = laptopId;
-        this.laptopName = laptopName;
-        this.cost = cost;
     }
 
     public int getLaptopId() {

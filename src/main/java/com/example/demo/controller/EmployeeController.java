@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.beans.Employee;
 import com.example.demo.exception.EmployeeException;
+import com.example.demo.exception.LaptopException;
 import com.example.demo.service.EmployeeServiceImpl;
 
 @RestController
@@ -51,5 +53,25 @@ public class EmployeeController {
 @GetMapping("/secondMaxSalary")
 public List<Employee> getSecondMaxSalary() {
     return service.getSecondMaxSalary();
+}
+
+@PutMapping("/assignLaptop/{empId}/{laptopId}")
+public Employee assignLaptop(@PathVariable int empId,
+                             @PathVariable int laptopId)
+        throws EmployeeException, LaptopException {
+
+    return service.assignLaptop(empId, laptopId);
+}
+
+@PutMapping("/deallocateLaptop/{empId}")
+public Employee deallocateLaptop(@PathVariable int empId)
+        throws EmployeeException {
+
+    return service.deallocateLaptop(empId);
+}
+
+@GetMapping("/laptopAvailability")
+public Map<String, Long> getLaptopAvailability() {
+    return service.getLaptopAvailability();
 }
 }
